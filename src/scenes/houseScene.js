@@ -43,6 +43,7 @@ class HouseScene extends Phaser.Scene {
   houseElevate(house,tornado) {
     this.house.y -= 2;
     this.player.y -= 2;
+    this.house.setTexture("brokenhouse")
     this.time.delayedCall(5000, () => {
         this.scene.start("brickScene");
       });
