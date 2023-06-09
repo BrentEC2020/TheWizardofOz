@@ -15,6 +15,17 @@ let config = {
             }
         }
     },
-    scene: [Load, Title, Play, Rules, GameOver]
+    
+    scene: [Load, Title, HouseScene]
 }
 let game = new Phaser.Game(config);
+let centerX = game.config.width/2;
+let centerY = game.config.height/2;
+let w = game.config.width;
+let h = game.config.height;
+let borderUISize = game.config.height / 15;
+let borderPadding = borderUISize / 3;
+let keyW;
+let keyS;
+let keyD;
+let keyA;
