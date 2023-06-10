@@ -5,7 +5,7 @@ class BrickScene extends Phaser.Scene {
     }
   
     create() {
-      //     this.background = this.add.tileSprite(0,0, 875, 875, 'titleBackground').setOrigin(0,0);
+      this.ybroad = this.add.tileSprite(0,0, 650, 425, 'ybroad').setOrigin(0,0);
       keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
       keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
       keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
