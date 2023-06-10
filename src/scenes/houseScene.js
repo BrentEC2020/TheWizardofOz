@@ -11,8 +11,8 @@ class HouseScene extends Phaser.Scene {
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-    this.tornado = this.physics.add.sprite(game.config.width + 300, game.config.height/2, "tornado", 0).setScale(15)
-    this.player = this.physics.add.sprite(100, game.config.height/2, "player", 0).setScale(2)
+    this.tornado = this.physics.add.sprite(game.config.width + 300, game.config.height/2, "tornado", 0).setScale(10)
+    this.player = this.physics.add.sprite(200, game.config.height/2 + 30, "player", 0).setScale(2)
     this.house = this.physics.add.sprite(100, game.config.height/2, "house", 0).setScale(2)
 
   }
@@ -44,6 +44,7 @@ class HouseScene extends Phaser.Scene {
     this.house.y -= 2;
     this.player.y -= 2;
     this.house.setTexture("brokenhouse")
+    this.VEL = 0;
     this.time.delayedCall(5000, () => {
         this.scene.start("brickScene");
       });

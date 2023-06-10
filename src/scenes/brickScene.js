@@ -11,8 +11,8 @@ class BrickScene extends Phaser.Scene {
       keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
       keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
   
-      this.player = this.physics.add.sprite(100, game.config.height/2, "player", 0).setScale(2)
-      this.house = this.physics.add.sprite(100, game.config.height/2, "house", 0).setScale(2)
+      this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0).setScale(2)
+      this.house = this.physics.add.sprite(100, game.config.height/2, "brokenhouse", 0).setScale(2)
   
     }
     update()
