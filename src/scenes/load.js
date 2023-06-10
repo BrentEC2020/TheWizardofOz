@@ -28,6 +28,7 @@ class Load extends Phaser.Scene{
         this.load.image("tornado", "tornado.png");
         this.load.image("house", "house.png");
         this.load.image("brokenhouse", "brokenhouse.png");
+        this.load.image("farm", "farm.png");
 
         // this.load () assets here
     }

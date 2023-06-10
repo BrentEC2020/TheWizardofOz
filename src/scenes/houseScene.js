@@ -12,15 +12,17 @@ class HouseScene extends Phaser.Scene {
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
+    this.farm = this.add.tileSprite(0, 0, 650, 425, 'farm').setOrigin(0, 0);
+
     // sprite definitions 
     this.tornado = this.physics.add
       .sprite(game.config.width + 500, game.config.height / 2, "tornado", 0)
       .setScale(10);
     this.player = this.physics.add
-      .sprite(200, game.config.height / 2 + 30, "player", 0)
+      .sprite(200, game.config.height / 2 + 100, "player", 0)
       .setScale(2);
     this.house = this.physics.add
-      .sprite(100, game.config.height / 2, "house", 0)
+      .sprite(100, game.config.height / 2 + 40, "house", 0)
       .setScale(2);
     // group definitions
     this.tornadoes = this.add.group();
