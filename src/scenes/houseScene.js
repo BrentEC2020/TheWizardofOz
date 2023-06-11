@@ -6,11 +6,14 @@ class HouseScene extends Phaser.Scene {
   }
 
   create() {
-    // key definitions
+    // key 
     keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+    /*this.storm = this.sound.add('storm');
+    this.storm.play();*/
 
     this.farm = this.add.tileSprite(0, 0, 650, 425, 'farm').setOrigin(0, 0);
 
