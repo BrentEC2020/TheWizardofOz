@@ -15,6 +15,9 @@ class HouseScene extends Phaser.Scene {
     this.music = this.sound.add('storm');
     this.music.setVolume(0.001);
     this.music.play();
+    this.crash = this.sound.add("tornadocrash");
+    this.crash.setSeek(10);
+    this.crash.setVolume(1);
 
     this.farm = this.add.tileSprite(0, 0, 650, 425, 'farm').setOrigin(0, 0);
 
@@ -46,9 +49,9 @@ class HouseScene extends Phaser.Scene {
       this.direction.x = 1;
     }
     if (keyW.isDown) {
-      this.direction.y = -1;
+      // this.direction.y = -1;
     } else if (keyS.isDown) {
-      this.direction.y = 1;
+      // this.direction.y = 1;
     }
     this.direction.normalize();
     this.player.setVelocity(
@@ -79,9 +82,12 @@ class HouseScene extends Phaser.Scene {
   houseElevate(house, tornado) {
     this.house.y -= 2;
     this.player.y -= 2;
+    this.crash.play();
     this.house.setTexture("brokenhouse");
     this.VEL = 0;
     this.time.delayedCall(5000, () => {
+      this.music.stop();
+      this.crash.stop();
       this.scene.start("brickScene");
     });
   }
