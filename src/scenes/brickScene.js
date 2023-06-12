@@ -16,7 +16,7 @@ class BrickScene extends Phaser.Scene {
       this.house = this.physics.add.sprite(100, game.config.height/2, "brokenhouse", 0).setScale(2)
       this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, false, true, true)
       this.player.setCollideWorldBounds(true);
-      this.cameras.main.setBounds(0,0,game.config.width * 2, game.config.height, true, false, true, true);
+      this.cameras.main.setBounds(5,5,game.config.width * 2, game.config.height - 5, true, false, true, true);
       this.cameras.main.startFollow(this.player, true, 1, 1);
       this.cameras.main.setZoom(1.2);
 
