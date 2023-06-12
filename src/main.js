@@ -29,3 +29,4 @@ let keyW;
 let keyS;
 let keyD;
 let keyA;
+let keySpace;

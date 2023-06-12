@@ -11,13 +11,14 @@ class HouseScene extends Phaser.Scene {
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    // storm noise 
+    // all audio
     this.music = this.sound.add('storm');
     this.music.setVolume(0.001);
     this.music.play();
     this.crash = this.sound.add("tornadocrash");
-    this.crash.setSeek(10);
     this.crash.setVolume(1);
+    this.throw = this.sound.add("throw");
+    this.throw.setVolume(0.5);
 
     this.farm = this.add.tileSprite(0, 0, 650, 425, 'farm').setOrigin(0, 0);
 
@@ -77,6 +78,7 @@ class HouseScene extends Phaser.Scene {
         null,
         this
       );
+      this.music.stop();
   }
 // house levitation function
   houseElevate(house, tornado) {
@@ -85,15 +87,15 @@ class HouseScene extends Phaser.Scene {
     this.crash.play();
     this.house.setTexture("brokenhouse");
     this.VEL = 0;
-    this.time.delayedCall(5000, () => {
-      this.music.stop();
-      this.crash.stop();
+    this.time.delayedCall(5500, () => {
+      this.game.sound.stopAll();
       this.scene.start("brickScene");
     });
   }
 // player shooting function
   playerShoot() { 
     this.input.on("pointerdown", (pointer) => {
+      this.throw.play();
       let bspeed = 200;
       let bullet = this.add
         .sprite(
