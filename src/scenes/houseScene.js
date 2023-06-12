@@ -6,6 +6,7 @@ class HouseScene extends Phaser.Scene {
   }
 
   create() {
+    this.scene.start("brickScene"); // WORKING ON SCENE 2
     // input key
     keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
