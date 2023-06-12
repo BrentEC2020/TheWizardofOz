@@ -5,7 +5,7 @@ class BrickScene extends Phaser.Scene {
     }
   
     create() {
-      this.ybroad = this.add.tileSprite(0,0, game.config.width * 2, game.config.height, 'ybroad').setOrigin(0,0);
+      this.ybroad = this.add.tileSprite(0,0, game.config.width * 3, game.config.height, 'ybroad').setOrigin(0,0);
       this.justroad = this.physics.add.sprite(0,game.config.height/3 - 8, "justroad").setOrigin(0,0);
       keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
       keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -27,6 +27,10 @@ class BrickScene extends Phaser.Scene {
     }
     update()
     {
+      console.log(this.player.x)
+      if (this.player.x > 1312) {
+        this.scene.start("crowScene");
+      }
   
       this.direction = new Phaser.Math.Vector2(0);
   
