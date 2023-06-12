@@ -14,10 +14,14 @@ class BrickScene extends Phaser.Scene {
   
       this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0).setScale(2)
       this.house = this.physics.add.sprite(100, game.config.height/2, "brokenhouse", 0).setScale(2)
+      this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, false, true, true)
       this.player.setCollideWorldBounds(true);
+      this.cameras.main.setBounds(0,0,game.config.width * 2, game.config.height, true, false, true, true);
+      this.cameras.main.startFollow(this.player, true, 1, 1);
+      this.cameras.main.setZoom(1.2);
 
       this.music = this.sound.add('song');
-      this.music.setVolume(0.01);
+      this.music.setVolume(0.001);
       this.music.play();
   
     }

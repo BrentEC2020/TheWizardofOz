@@ -24,7 +24,8 @@ class Title extends Phaser.Scene {
   update() {
     if (
       this.input.keyboard.on("keydown", () => {
-        this.scene.start("houseScene");
+        //this.scene.start("houseScene");
+        this.scene.start("brickScene"); // WORKING ON SCENE 2
       })
     );
   }
