@@ -13,6 +13,9 @@ class BrickScene extends Phaser.Scene {
   
       this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0).setScale(2)
       this.house = this.physics.add.sprite(100, game.config.height/2, "brokenhouse", 0).setScale(2)
+
+      this.music = this.sound.add('song');
+      this.music.play();
   
     }
     update()
