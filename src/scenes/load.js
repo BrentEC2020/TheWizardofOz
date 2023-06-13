@@ -35,7 +35,7 @@ class Load extends Phaser.Scene{
         this.load.image("stillcrow", "scarecrowObj.png");
         this.load.image("scarecrow", "scarecrow.png");
         this.load.image("tinbg", "tinmanBackground.png");
-        this.load.image("stilltin", "tinmanObj.png");
+        this.load.image("stilltin", "tinmanObj.png.png");
         this.load.image("tinman", "tinman.png");
         this.load.image("lionbg", "lionbackground.png");
         this.load.image("lion", "lion.png");
