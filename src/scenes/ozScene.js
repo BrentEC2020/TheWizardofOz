@@ -86,6 +86,8 @@ class OzScene extends Phaser.Scene {
         this.physics.add.collider(this.wizard, this.tinman);
         this.physics.add.collider(this.wizard, this.lion);
 
+        this.ozText = this.add.text(game.config.width/2 - 60, game.config.height/2 + 50, "COME FORTH!").setOrigin(0.5);
+
     }
     
     update() {
@@ -93,6 +95,7 @@ class OzScene extends Phaser.Scene {
         this.direction = new Phaser.Math.Vector2(0);
         this.toto.direction = new Phaser.Math.Vector2(0);
         this.wizard.direction = new Phaser.Math.Vector2(0);
+        console.log(this.wizard.x, this.wizard.y);
 
         if (keyA.isDown) {
             this.direction.x = -1;
@@ -118,21 +121,18 @@ class OzScene extends Phaser.Scene {
             this.player.anims.pause();
         }
 
-        if (this.player.x > 100 && this.sceneStart == false) {
+        if (this.player.x > 300 && this.sceneStart == false) {
             this.sceneStart = true;
-            this.ozText = this.add.text(game.config.width/2 - 30, game.config.height/2 + 50, "COME FORTH!").setOrigin(0.5);
-            this.time.delayedCall(3000, () => {
-                this.ozText.setText("We would like you to grant our wishes O' Great Wizard.");
-                this.time.delayedCall(5000, () => {
+            this.ozText.setText("We would like you to grant our wishes O' Great Wizard.");
+            this.VEL = 1;
+                this.time.delayedCall(3000, () => {
                     this.ozText.setText("I can certainly do that, just wait there.");
-                    this.time.delayedCall(7000, () => {
+                    this.VEL = 100;
+                    this.time.delayedCall(6000, () => {
                         this.ozText.setText("No Toto! The Wizard told us to stay put!\n(You, the PLAYER, now have control of Toto.)");
-                        this.time.delayedCall(9000, () => {
-                            this.ozText.setText(" ");                     
-                        });
                     });
+
                 });
-            });
         }
 
         this.physics.collide(this.toto, this.curtain, this.curtainCollide, null, this);
@@ -249,6 +249,7 @@ class OzScene extends Phaser.Scene {
     curtainCollide() {
         if (this.curtainOpen == false) {
             this.curtainOpen = true;
+            this.ozText.setText(" "); 
             this.curtain.anims.play('curtainDraw', true);
             this.curtain.destroy();
             this.wizard.setPosition(300, game.config.height - 390);
