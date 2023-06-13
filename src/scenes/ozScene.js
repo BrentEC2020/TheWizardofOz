@@ -287,14 +287,14 @@ class OzScene extends Phaser.Scene {
         if (this.inventory[0] == true) {
             this.inventory[0] = false;
             this.medal.setPosition(388,395);
-            this.ozText.setText("A diploma for you because those \nwith diplomas think a lot.")
+            this.ozText.setText("A diploma for you, because those \nwith diplomas think a lot.")
         }
     }
     giveMedal() {
         if (this.inventory[1] == true) {
             this.inventory[1] = false;
             this.heart.setPosition(388,395);
-            this.ozText.setText("A medal for you because heros are courageous.")
+            this.ozText.setText("A medal for you because heroes are courageous.")
         }
     }
     giveHeart() {
@@ -312,7 +312,7 @@ class OzScene extends Phaser.Scene {
                             this.time.delayedCall(3000, () => {
                                 this.ozText.setText("All you have to do is click your slippers and \n say there is no place like home!");
                                 this.time.delayedCall(3000, () => {
-                                    this.ozText.setText("Theres no place like home.");
+                                    this.ozText.setText("There's no place like home.");
                                     this.time.delayedCall(3000, () => {
                                         this.scene.start("overScene");
                                     });    
