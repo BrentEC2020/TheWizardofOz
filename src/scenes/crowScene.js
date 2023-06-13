@@ -2,7 +2,6 @@ class CrowScene extends Phaser.Scene {
     constructor() {
         super("crowScene");
         this.VEL = 100;
-        this.collide = false;
         this.birdCount = 0;
     }
 
@@ -19,8 +18,6 @@ class CrowScene extends Phaser.Scene {
         this.stillcrow = this.physics.add.sprite(320, game.config.height/4 + 270, "stillcrow", 0).setScale(2);
         this.scarecrow = this.physics.add.sprite(-10, game.config.height - 20, "scarecrow", 0).setScale(2);
         this.bird = this.physics.add.sprite(670, game.config.height - 20, "bird", 0).setScale(4);
-
-        this.collide = false;
 
         this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, true, true, true)
         this.player.setCollideWorldBounds(true);
@@ -78,8 +75,8 @@ class CrowScene extends Phaser.Scene {
             }
       }
 
-   /*birdDestroy() {
+    birdDestroy() {
         this.crows.destroy();
-    }*/
+    }
 }
 
