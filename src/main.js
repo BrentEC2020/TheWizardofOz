@@ -3,6 +3,8 @@
 * We worked really hard to try to stay true to the film's metaphors and subliminal messaging.
 * The art created was made simplistic as a stylistic choice.
 * We successfully were able to recycle our code to keep well within our scope when transfering between scenes.
+* We used Physics systems, cameras, text objects, the animation manager, and timers.
+* 
 */
 
 let config = {
