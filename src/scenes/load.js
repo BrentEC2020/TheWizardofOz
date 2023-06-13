@@ -31,6 +31,8 @@ class Load extends Phaser.Scene{
         this.load.image("farm", "farm.png");
         this.load.image("ybroad", "yellowbrickroad.png");
         this.load.image("justroad", "justroad.png");
+        this.load.image("lionbg", "lionbackground.png");
+        this.load.image("lion", "lion.png");
 
         this.load.audio("followroad", "followroad.mp3")
         this.load.audio('throw', "throw.mp3");
