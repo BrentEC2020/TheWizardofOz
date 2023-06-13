@@ -16,7 +16,7 @@ let config = {
         }
     },
     
-    scene: [Load, Title, HouseScene, BrickScene, CrowScene, TinScene, LionScene, OzScene]
+    scene: [Load, Title, Rules, Credits, GameOver, HouseScene, BrickScene, CrowScene, TinScene, LionScene, OzScene]
 }
 let game = new Phaser.Game(config);
 let centerX = game.config.width/2;
@@ -29,5 +29,6 @@ let keyW;
 let keyS;
 let keyD;
 let keyA;
-let keySpace;
+let keySPACE;
+let keyC;
 let keyR;

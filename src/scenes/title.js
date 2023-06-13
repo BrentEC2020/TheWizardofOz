@@ -18,13 +18,21 @@ class Title extends Phaser.Scene {
     };
 
     this.background = this.add.tileSprite(0, 0, 650, 425, 'title').setOrigin(0, 0);
+
+    keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    keyC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
+    keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
   }
   update() {
-    if (
-      this.input.keyboard.on("keydown", () => {
+    if (keySPACE.isDown) {
         //this.scene.start("houseScene");
         this.scene.start("ozScene"); // CURRENT WORKING SCENE: LION
-      })
-    );
+    }
+    if (keyC.isDown) {
+      this.scene.start("creditScene");
+    }
+    if (keyR.isDown) {
+      this.scene.start("rulesScene");
+    }
   }
 }

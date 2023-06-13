@@ -1,0 +1,22 @@
+class GameOver extends Phaser.Scene {
+    constructor() {
+        super("overScene");
+    }
+
+    create() {
+        this.background = this.add.tileSprite(0, 0, 650, 425, 'gameover').setOrigin(0, 0);
+        
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+    }
+
+    update() {
+        if (keySPACE.isDown) {
+            //this.scene.start("houseScene");
+            this.scene.start("titleScene"); // CURRENT WORKING SCENE: LION
+        }
+        if (keyR.isDown) {
+          this.scene.start("houseScene");
+        }
+      }
+}
