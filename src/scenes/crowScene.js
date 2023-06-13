@@ -86,7 +86,7 @@ class CrowScene extends Phaser.Scene {
 
         if (this.player.y > 430) {
             this.game.sound.stopAll();
-            this.scene.start("ozScene")
+            this.scene.start("tinScene")
         }
     }   
 

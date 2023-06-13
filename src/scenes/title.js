@@ -25,7 +25,7 @@ class Title extends Phaser.Scene {
     if (
       this.input.keyboard.on("keydown", () => {
         //this.scene.start("houseScene");
-        this.scene.start("crowScene"); // CURRENT WORKING SCENE: LION
+        this.scene.start("tinScene"); // CURRENT WORKING SCENE: LION
       })
     );
   }
