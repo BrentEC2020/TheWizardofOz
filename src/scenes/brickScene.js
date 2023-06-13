@@ -29,15 +29,16 @@ class BrickScene extends Phaser.Scene {
       this.cameras.main.startFollow(this.player, true, 1, 1);
       this.cameras.main.setZoom(1.2);
 
-      this.sound.play("song", {volume: 0.01, loop: true})
-      this.sound.play("followroad", {volume: 0.01, loop: true, delay: 2})
+      this.sound.play("song", {volume: 0.1, loop: true});
+      this.follow = this.sound.add("followroad", {volume: 0.1, loop: true, delay: 2});
+      this.follow.play();
   
     }
 
     update()
     {
       if (this.player.x > game.config.width * 1.5 + 20) {
-        this.game.sound.stopAll();
+        this.follow.stop();
         this.scene.start("crowScene");
       }
   

@@ -57,6 +57,8 @@ class TinScene extends Phaser.Scene {
         this.tree8 = this.physics.add.sprite(400, game.config.height/2 + 140, "tree", 0).setImmovable();
 
         this.oilcans = this.add.group();
+        this.follow = this.sound.add("followroad", {volume: 0.1, loop: true, delay: 2});
+        this.oil = this.sound.add("throw", {volume: 0.1})
     }
     
     update() {
@@ -95,7 +97,6 @@ class TinScene extends Phaser.Scene {
                 this.startText = this.add.text(game.config.width/2, game.config.height/2, "You there, please help de-rust me!\nThere has to be an oil can behind\none of these trees.").setOrigin(0.5);
                 this.time.delayedCall(4000,() => {
                     this.startText.setText(" ");
-                    console.log("textchange");
                 });
             }
         }
@@ -119,7 +120,7 @@ class TinScene extends Phaser.Scene {
         }
 
         if (this.player.y > 430) {
-            this.game.sound.stopAll();
+            this.follow.stop();
             this.scene.start("lionScene")
         }
     }   
@@ -143,7 +144,6 @@ class TinScene extends Phaser.Scene {
             this.treeText = this.add.text(game.config.width/2, game.config.height/2, "This tree does not have the Oil Can!").setOrigin(0.5);
             this.time.delayedCall(1000,() => {
                 this.treeText.setText(" ");
-                console.log("textchange");
             });
         }
         this.treefound = false;
@@ -165,7 +165,6 @@ class TinScene extends Phaser.Scene {
             this.canText = this.add.text(game.config.width/2, game.config.height/2, "You found the Oil Can!").setOrigin(0.5);
             this.time.delayedCall(1000,() => {
                 this.canText.setText("Bring it here and de-rust me please!");
-                console.log("textchange");
                 this.time.delayedCall(2000, () => {
                     this.canText.setText(" ");
                 });
@@ -182,7 +181,7 @@ class TinScene extends Phaser.Scene {
     holdingOil() {
         if (this.gotOil == true) {
             this.input.on("pointerdown", (pointer) => {
-                this.sound.play("throw", {volume: 0.1})
+                this.oil.play();
                 let bspeed = 100;
                 let hand = this.add
                     .sprite(
@@ -218,7 +217,6 @@ class TinScene extends Phaser.Scene {
             this.tinText = this.add.text(game.config.width/2, game.config.height/2, "Thank you! You have such\na big heart!").setOrigin(0.5);
             this.time.delayedCall(3000,() => {
                 this.tinText.setText("I wish I had a heart like that...");
-                console.log("textchange");
                 this.time.delayedCall(5000, () => {
                     this.tinText.setText("You have no heart? Then you\nmust accompany us to visit the Wizard!");
                     this.time.delayedCall(7000, () => {

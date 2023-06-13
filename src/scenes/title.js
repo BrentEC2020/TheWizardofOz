@@ -25,8 +25,7 @@ class Title extends Phaser.Scene {
   }
   update() {
     if (keySPACE.isDown) {
-        //this.scene.start("houseScene");
-        this.scene.start("ozScene"); // CURRENT WORKING SCENE: LION
+        this.scene.start("houseScene");
     }
     if (keyC.isDown) {
       this.scene.start("creditScene");

@@ -22,13 +22,14 @@ class HouseScene extends Phaser.Scene {
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     // all audio
 
-    this.sound.play("storm", {volume: 0.001})
+    this.sound.play("storm", {volume: 0.1})
 
     this.farm = this.add.tileSprite(0, 0, 650, 425, 'farm').setOrigin(0, 0);
 
     // sprite definitions 
     this.tornado = this.physics.add
       .sprite(game.config.width + 500, game.config.height / 2, "bignado", 0);
+      this.tornado.flipX = true;
     this.player = this.physics.add
       .sprite(200, game.config.height / 2 + 75, "player", 0);
     this.house = this.physics.add

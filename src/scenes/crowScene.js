@@ -26,7 +26,6 @@ class CrowScene extends Phaser.Scene {
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.background = this.add.tileSprite(0, 0, 650, 425, 'crowbg').setOrigin(0, 0);
       
@@ -51,6 +50,8 @@ class CrowScene extends Phaser.Scene {
 
         this.crowStuck = false;
         this.sceneOver = false;
+
+        this.follow = this.sound.add("followroad", {volume: 0.1, loop: true, delay: 2});
     }
     
     update() {
@@ -89,7 +90,7 @@ class CrowScene extends Phaser.Scene {
 
         if (this.birdCount == 15 && this.sceneOver == false) {
             this.sceneOver = true;
-            this.sound.play("followroad", {volume: 0.01, loop: true, delay: 2});
+            this.follow.play();
             this.stillcrow.destroy();
             this.scarecrow = this.physics.add.sprite(320, game.config.height/4 + 270, "scarecrow", 0);
             this.doneText = this.add.text(game.config.width/2, game.config.height/2, "Good Gracious! I would never have been able to do that\n since I don't have a brain.").setOrigin(0.5);
@@ -97,7 +98,6 @@ class CrowScene extends Phaser.Scene {
                 this.doneText.setText("You don't have a brain? Why, you should come\n to the Wizard with me and ask for one!");
                 this.time.delayedCall(5000,() => {
                     this.doneText.setText("Well if you insist!");
-                    console.log("textchange");
                     this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, true, true, false);
                 });
             });
@@ -109,7 +109,7 @@ class CrowScene extends Phaser.Scene {
         }
 
         if (this.player.y > 430) {
-            this.game.sound.stopAll();
+            this.follow.stop();
             this.scene.start("tinScene")
         }
     }   
@@ -129,6 +129,7 @@ class CrowScene extends Phaser.Scene {
       }
 
     birdDestroy(player, bird) {
+        this.sound.play("throw", {volume: 0.1})
         bird.destroy();
     }
 
@@ -142,7 +143,6 @@ class CrowScene extends Phaser.Scene {
             this.birdtext = this.add.text(game.config.width/2, game.config.height/2, "PLEASE KEEP THE CROWS AWAY FROM ME, \nSCARE THEM, BLOCK THEM, ANYTHING!").setOrigin(0.5);           
             this.time.delayedCall(3000,() => {
                 this.birdtext.setText(" ");
-                console.log("textchange");
             });
 
         }

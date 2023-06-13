@@ -5,6 +5,7 @@ class OzScene extends Phaser.Scene {
       this.linedUp = false;
       this.curtainOpen = false;
       this.sceneStart = false;
+      this.inventory = [false,false,false];
     }
 
     preload() {
@@ -72,6 +73,10 @@ class OzScene extends Phaser.Scene {
         this.toto = this.physics.add.sprite(-400, game.config.height/2 - 400, "toto", 0);
         this.wizard = this.physics.add.sprite(-400, game.config.height/2 - 400, "wizard", 0);
 
+        this.medal = this.physics.add.sprite(-400, 0,"medal",0);
+        this.heart = this.physics.add.sprite(-400, 0,"heart",0);
+        this.diploma = this.physics.add.sprite(-400,0,"diploma",0);
+
         this.player.setCollideWorldBounds(true);
 
         this.curtain = this.physics.add.sprite(300, game.config.height - 390, "curtain", 0).setImmovable();
@@ -95,7 +100,6 @@ class OzScene extends Phaser.Scene {
         this.direction = new Phaser.Math.Vector2(0);
         this.toto.direction = new Phaser.Math.Vector2(0);
         this.wizard.direction = new Phaser.Math.Vector2(0);
-        console.log(this.wizard.x, this.wizard.y);
 
         if (keyA.isDown) {
             this.direction.x = -1;
@@ -127,8 +131,8 @@ class OzScene extends Phaser.Scene {
             this.VEL = 1;
                 this.time.delayedCall(3000, () => {
                     this.ozText.setText("I can certainly do that, just wait there.");
-                    this.VEL = 100;
-                    this.time.delayedCall(6000, () => {
+                    this.time.delayedCall(5000, () => {
+                        this.VEL = 100;
                         this.ozText.setText("No Toto! The Wizard told us to stay put!\n(You, the PLAYER, now have control of Toto.)");
                     });
 
@@ -136,6 +140,15 @@ class OzScene extends Phaser.Scene {
         }
 
         this.physics.collide(this.toto, this.curtain, this.curtainCollide, null, this);
+
+        this.physics.collide(this.wizard, this.diploma, this.diplomaCollide, null, this);
+        this.physics.collide(this.wizard, this.medal, this.medalCollide, null, this);
+        this.physics.collide(this.wizard, this.heart, this.heartCollide, null, this);
+
+        this.physics.collide(this.wizard, this.scarecrow, this.giveDiploma, null, this);
+        this.physics.collide(this.wizard, this.lion, this.giveMedal, null, this);
+        this.physics.collide(this.wizard, this.tinman, this.giveHeart, null, this);
+
 
         if (this.player.x > 300) {
             this.player.body.velocity.x = 0;
@@ -249,10 +262,68 @@ class OzScene extends Phaser.Scene {
     curtainCollide() {
         if (this.curtainOpen == false) {
             this.curtainOpen = true;
+            this.wizard.setImmovable(true);
             this.ozText.setText(" "); 
             this.curtain.anims.play('curtainDraw', true);
             this.curtain.destroy();
             this.wizard.setPosition(300, game.config.height - 390);
+            this.diploma.setPosition(130,20);
         }
     }
+    diplomaCollide() {
+        this.diploma.destroy()
+        this.inventory[0] = true;
+    }
+    medalCollide() {
+        this.medal.destroy();
+        this.inventory[1] = true;
+    }
+    heartCollide() {
+        this.inventory[2] = true;
+        this.heart.destroy();
+    }
+
+    giveDiploma() {
+        if (this.inventory[0] == true) {
+            this.inventory[0] = false;
+            this.medal.setPosition(388,395);
+            this.ozText.setText("A diploma for you because those \nwith diplomas think a lot.")
+        }
+    }
+    giveMedal() {
+        if (this.inventory[1] == true) {
+            this.inventory[1] = false;
+            this.heart.setPosition(388,395);
+            this.ozText.setText("A medal for you because heros are courageous.")
+        }
+    }
+    giveHeart() {
+        if (this.inventory[2] == true) {
+            this.inventory[2] = false;
+            this.ozText.setText("And a heart for you Mister Tin Man.");
+            this.time.delayedCall(3000, () => {
+                this.ozText.setText("What about Dorothy??");
+                this.time.delayedCall(3000, () => {
+                    this.ozText.setText("Well I could certainly take Dorothy to Kansas.");
+                    this.time.delayedCall(3000, () => {
+                        this.ozText.setText("Really?");
+                        this.time.delayedCall(3000, () => {
+                            this.ozText.setText("But my balloon left the city and never returned.");
+                            this.time.delayedCall(3000, () => {
+                                this.ozText.setText("All you have to do is click your slippers and \n say there is no place like home!");
+                                this.time.delayedCall(3000, () => {
+                                    this.ozText.setText("Theres no place like home.");
+                                    this.time.delayedCall(3000, () => {
+                                        this.scene.start("overScene");
+                                        this.game.sound.stopAll();
+                                    });    
+                                });    
+                            });    
+                        });    
+                    });    
+                });    
+            });    
+        }
+    }
+
 }

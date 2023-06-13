@@ -12,8 +12,7 @@ class GameOver extends Phaser.Scene {
 
     update() {
         if (keySPACE.isDown) {
-            //this.scene.start("houseScene");
-            this.scene.start("titleScene"); // CURRENT WORKING SCENE: LION
+            this.scene.start("titleScene"); 
         }
         if (keyR.isDown) {
           this.scene.start("houseScene");

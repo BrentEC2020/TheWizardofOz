@@ -47,12 +47,17 @@ class Load extends Phaser.Scene{
         this.load.image("lionbg", "lionbackground.png");
         this.load.image("lion", "lion.png");
         this.load.image("claw", "clawScratch.png");
+        this.load.image("hand", "hand.png");
         this.load.image("bird", "crow.png");
         this.load.image("tree", "tree.png");
         this.load.image("ozbg", "ozbackground.png");
         this.load.image("toto", "toto.png");
         this.load.image("wizard", "Wizard.png");
         this.load.image("curtain", "curtain.png");
+
+        this.load.image("medal", "valormedal.png");
+        this.load.image("heart", "heart.png");
+        this.load.image("diploma", "diploma.png");
 
         this.load.audio("followroad", "followroad.mp3")
         this.load.audio('throw', "throw.mp3");
