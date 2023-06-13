@@ -315,7 +315,6 @@ class OzScene extends Phaser.Scene {
                                     this.ozText.setText("Theres no place like home.");
                                     this.time.delayedCall(3000, () => {
                                         this.scene.start("overScene");
-                                        this.game.sound.stopAll();
                                     });    
                                 });    
                             });    
