@@ -9,34 +9,35 @@ class LionScene extends Phaser.Scene {
     keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-    this.background = this.add
-      .tileSprite(0, 0, 650, 425, "lionbg")
-      .setOrigin(0, 0);
+
+    this.background = this.add.tileSprite(0, 0, 650, 425, "lionbg").setOrigin(0, 0);
+    // define sprites
     this.player = this.physics.add.sprite(65, 40, "player", 0).setScale(2);
     this.tinman = this.physics.add.sprite(35, 20, "tinman", 0).setScale(2);
-    this.scarecrow = this.physics.add
-      .sprite(95, 20, "scarecrow", 0)
-      .setScale(2);
-    this.player.setCollideWorldBounds(true);
+    this.scarecrow = this.physics.add.sprite(95, 20, "scarecrow", 0).setScale(2);
     this.lion = this.physics.add.sprite(600, 350, "lion", 0).setScale(2);
-    this.lion.flipX = true; 
+    this.lion.flipX = true;
+
+    this.player.setCollideWorldBounds(true);
+
     this.claws = this.add.group();
     this.hands = this.add.group();
 
-    this.playerSlap();
-
     this.lionattacking = this.time.addEvent({
-      delay: 1000, 
+      delay: 2000, 
       callback: this.lionattack,
       callbackScope: this,
       loop: true
     });
 
+    this.playerSlap();
+    this.slapped = false;
 
   }
 
   update() {
     // player movement from vector
+
     this.direction = new Phaser.Math.Vector2(0);
     if (keyA.isDown) {
       this.direction.x = -1;
@@ -56,6 +57,12 @@ class LionScene extends Phaser.Scene {
     // follow script for player
     this.friendsfollow();
     this.lionmove(this.player.body.velocity.x,this.player.body.velocity.y);
+    this.physics.collide(this.player,this.claws,this.playerdamage,null,this);
+    this.physics.collide(this.lion,this.hands,this.lionslap,null,this);
+
+    if (this.player.x > 660) {
+      this.scene.start("ozScene")
+    }
   }
 
   friendsfollow() {
@@ -120,5 +127,23 @@ class LionScene extends Phaser.Scene {
     }
   }
 
+  playerdamage() {
+    this.scene.restart();
+  }
+
+  lionslap() {
+    if (this.slapped == false) {
+    this.slapped = true;
+    this.lionattacking.destroy();
+    this.crytext = this.add.text(game.config.width/2, game.config.height/2, "WAHHH WAHHH I'm a coward, I haven't any courage at all.").setOrigin(0.5);
+    this.time.delayedCall(3000, () => {
+      this.crytext.setText("Well I'm sure the wizard could give you some courage.");
+      this.time.delayedCall(5000, () => {
+        this.crytext.setText("We're off to see the wizard! The wonderful Wizard of Oz.")
+        this.physics.world.setBounds(0,0,game.config.width/3-8, game.config.height, true, false, true, true)
+      })
+    })
+  };   
+  }
 }
 
