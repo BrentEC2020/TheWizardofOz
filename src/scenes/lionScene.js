@@ -61,6 +61,7 @@ class LionScene extends Phaser.Scene {
     this.physics.collide(this.lion,this.hands,this.lionslap,null,this);
 
     if (this.player.x > 660) {
+      this.game.sound.stopAll();
       this.scene.start("ozScene")
     }
   }
@@ -139,6 +140,7 @@ class LionScene extends Phaser.Scene {
     this.time.delayedCall(3000, () => {
       this.crytext.setText("Well I'm sure the wizard could give you some courage.");
       this.time.delayedCall(5000, () => {
+        this.sound.play("followroad", {volume: 0.01, loop: true, delay: 2})
         this.crytext.setText("We're off to see the wizard! The wonderful Wizard of Oz.")
         this.physics.world.setBounds(0,0,game.config.width/3-8, game.config.height, true, false, true, true)
       })
