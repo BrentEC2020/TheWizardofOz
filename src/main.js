@@ -1,3 +1,10 @@
+/*
+* Created by Brent Chou and Arthur Lin
+* We worked really hard to try to stay true to the film's metaphors and subliminal messaging.
+* The art created was made simplistic as a stylistic choice.
+* We successfully were able to recycle our code to keep well within our scope when transfering between scenes.
+*/
+
 let config = {
     type: Phaser.CANVAS,
     width: 650,
