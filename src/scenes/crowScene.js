@@ -16,10 +16,9 @@ class CrowScene extends Phaser.Scene {
       
         this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0).setScale(2);
         this.stillcrow = this.physics.add.sprite(320, game.config.height/4 + 270, "stillcrow", 0).setScale(2);
-        this.scarecrow = this.physics.add.sprite(-10, game.config.height - 20, "scarecrow", 0).setScale(2);
+        
         this.bird = this.physics.add.sprite(670, game.config.height - 20, "bird", 0).setScale(4);
 
-        this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, true, true, true)
         this.player.setCollideWorldBounds(true);
 
         this.stillcrow.setImmovable();
@@ -33,6 +32,9 @@ class CrowScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        this.crowStuck = false;
+        this.sceneOver = false;
     }
     
     update() {
@@ -58,12 +60,39 @@ class CrowScene extends Phaser.Scene {
             this.physics.moveToObject(bird,this.stillcrow,100);
         });
 
+        this.physics.collide(this.stillcrow, this.crows, this.scarecrowDamage, null, this);
         this.physics.collide(this.player,this.crows,this.birdDestroy,null,this);
 
+        if (this.birdCount == 15 && this.sceneOver == false) {
+            this.sceneOver = true;
+            this.sound.play("followroad", {volume: 0.01, loop: true, delay: 2});
+            this.stillcrow.destroy();
+            this.scarecrow = this.physics.add.sprite(320, game.config.height/4 + 270, "scarecrow", 0).setScale(2);
+            this.doneText = this.add.text(game.config.width/2, game.config.height/2, "Good Gracious! I would never have been able to do that\n since I don't have a brain.").setOrigin(0.5);
+            this.time.delayedCall(3000,() => {
+                this.doneText.setText("You don't have a brain? Why, you should come\n to the Wizard with me and ask for one!");
+                this.time.delayedCall(5000,() => {
+                    this.doneText.setText("Well if you insist!");
+                    console.log("textchange");
+                    this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, true, true, false);
+                });
+            });
+        }
+
+        if (this.sceneOver == true) {
+            this.scarecrowMove(this.player.body.velocity.x,this.player.body.velocity.y);
+            this.physics.collide(this.scarecrow, this.crows, this.scarecrowDamage, null, this);
+        }
+
+        if (this.player.y > 430) {
+            this.game.sound.stopAll();
+            this.scene.start("ozScene")
+        }
     }   
 
     birdMove() {
-        if(this.player.x > 320 && this.birdCount != 10) {
+        if(this.player.x > 320 && this.birdCount != 15) {
+            this.scareCrowStuck();
             this.birdCount += 1;
             let birdFly = this.physics.add.sprite(
                 game.config.width +  Phaser.Math.Between(50, 300),
@@ -77,6 +106,32 @@ class CrowScene extends Phaser.Scene {
 
     birdDestroy(player, bird) {
         bird.destroy();
+    }
+
+    scarecrowDamage() {
+        this.scene.restart();
+    }
+
+    scareCrowStuck() {
+        if (this.crowStuck == false) {
+            this.crowStuck = true;
+            this.birdtext = this.add.text(game.config.width/2, game.config.height/2, "PLEASE KEEP THE CROWS AWAY FROM ME, \nSCARE THEM, BLOCK THEM, ANYTHING!").setOrigin(0.5);           
+            this.time.delayedCall(3000,() => {
+                this.birdtext.setText(" ");
+                console.log("textchange");
+            });
+
+        }
+    }
+
+    scarecrowMove(speedx, speedy) {
+        if (speedx != 0 || speedy != 0) {
+          this.physics.moveToObject(this.scarecrow, this.player, 50);
+        }
+        else {
+          this.scarecrow.body.velocity.x = 0;
+          this.scarecrow.body.velocity.y = 0;
+        }
     }
 }
 
