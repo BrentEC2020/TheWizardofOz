@@ -30,3 +30,4 @@ let keyS;
 let keyD;
 let keyA;
 let keySpace;
+let keyR;

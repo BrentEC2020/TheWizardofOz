@@ -17,15 +17,13 @@ class Title extends Phaser.Scene {
       fixedWidth: 0,
     };
 
-    this.add
-      .text(game.config.width/2, game.config.height/2, "Press Any key to start.")
-      .setOrigin(0.5);
+    this.background = this.add.tileSprite(0, 0, 650, 425, 'title').setOrigin(0, 0);
   }
   update() {
     if (
       this.input.keyboard.on("keydown", () => {
         //this.scene.start("houseScene");
-        this.scene.start("tinScene"); // CURRENT WORKING SCENE: LION
+        this.scene.start("ozScene"); // CURRENT WORKING SCENE: LION
       })
     );
   }

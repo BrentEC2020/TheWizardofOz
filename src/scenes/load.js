@@ -21,11 +21,14 @@ class Load extends Phaser.Scene{
 
         this.load.path = './assets/';
         
+        this.load.image("title", "title.png");
+
         this.load.image("broom", "broom.png");
         this.load.image("chair", "chair.png");
-        this.load.image("player", "dorothy.png");
+        
         this.load.image("plate", "plate.png");
         this.load.image("tornado", "tornado.png");
+        this.load.image("bignado", "bigNado.png");
         this.load.image("house", "house.png");
         this.load.image("brokenhouse", "brokenhouse.png");
         this.load.image("farm", "farm.png");
@@ -43,6 +46,10 @@ class Load extends Phaser.Scene{
         this.load.image("claw", "clawScratch.png");
         this.load.image("bird", "crow.png");
         this.load.image("tree", "tree.png");
+        this.load.image("ozbg", "ozbackground.png");
+        this.load.image("toto", "toto.png");
+        this.load.image("wizard", "Wizard.png");
+        this.load.image("curtain", "curtain.png");
 
         this.load.audio("followroad", "followroad.mp3")
         this.load.audio('throw', "throw.mp3");
@@ -52,6 +59,15 @@ class Load extends Phaser.Scene{
         this.load.audio('song', "song.mp3");
 
         // this.load () assets here
+
+        // spritesheets
+        this.load.spritesheet("player", "dorothyspritesheet.png", {frameWidth: 24, frameHeight: 51});
+        this.load.spritesheet("scmove", "scarecrowspritesheet.png", {frameWidth: 30, frameHeight: 60});
+        this.load.spritesheet("tmmove", "tinmanspritesheet.png", {frameWidth: 24, frameHeight: 60});
+        this.load.spritesheet("lmove", "lionspritesheet.png", {frameWidth: 30, frameHeight: 60});
+        this.load.spritesheet("dogmove", "totospritesheet.png", {frameWidth: 32, frameHeight: 30});
+        this.load.spritesheet("wmove", "wizardspritesheet.png", {frameWidth: 24, frameHeight: 60});
+        this.load.spritesheet("curtainanim", "curtainspritesheet.png", {frameWidth: 260, frameHeight: 60});
     }
 
     create() {

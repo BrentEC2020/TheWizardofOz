@@ -5,6 +5,15 @@ class HouseScene extends Phaser.Scene {
     this.projectiles = ["broom", "chair", "plate"];
   }
 
+  preload() {
+    this.anims.create({
+      key: 'dWalk',
+      frameRate: 4,
+      frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+      repeat: -1,
+    });
+  }
+
   create() {
     // input key
     keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -19,14 +28,11 @@ class HouseScene extends Phaser.Scene {
 
     // sprite definitions 
     this.tornado = this.physics.add
-      .sprite(game.config.width + 500, game.config.height / 2, "tornado", 0)
-      .setScale(10);
+      .sprite(game.config.width + 500, game.config.height / 2, "bignado", 0);
     this.player = this.physics.add
-      .sprite(200, game.config.height / 2 + 100, "player", 0)
-      .setScale(2);
+      .sprite(200, game.config.height / 2 + 75, "player", 0);
     this.house = this.physics.add
-      .sprite(100, game.config.height / 2 + 40, "house", 0)
-      .setScale(2);
+      .sprite(100, game.config.height / 2 + 15, "house", 0);
     // group definitions
     this.tornadoes = this.add.group();
     this.bullets = this.add.group();
@@ -40,20 +46,28 @@ class HouseScene extends Phaser.Scene {
     // player movement from vector
     this.direction = new Phaser.Math.Vector2(0);
     if (keyA.isDown) {
-      this.direction.x = -1;
+        this.direction.x = -1;
+        this.player.anims.play('dWalk', true);
     } else if (keyD.isDown) {
-      this.direction.x = 1;
+        this.direction.x = 1;
+        this.player.anims.play('dWalk', true);
     }
     if (keyW.isDown) {
-      // this.direction.y = -1;
+        /*this.direction.y = -1;
+        this.player.anims.play('dWalk', true);*/
     } else if (keyS.isDown) {
-      // this.direction.y = 1;
+        /*this.direction.y = 1;
+        this.player.anims.play('dWalk', true);*/
     }
     this.direction.normalize();
     this.player.setVelocity(
-      this.VEL * this.direction.x,
-      this.VEL * this.direction.y
+        this.VEL * this.direction.x,
+        this.VEL * this.direction.y
     );
+
+    if (this.player.body.velocity.x == 0 && this.player.body.velocity.y == 0) {
+        this.player.anims.pause();
+    }
     this.tornadoes.getChildren().forEach((nado) => {
         this.physics.moveToObject(nado,this.house,100);
     });

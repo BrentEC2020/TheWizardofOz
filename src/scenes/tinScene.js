@@ -5,7 +5,31 @@ class TinScene extends Phaser.Scene {
       this.treefound = false;
       this.gotOil = false;
       this.derusted = false;
+      this.sceneStart = false;
       this.sceneOver = false;
+    }
+
+    preload() {
+        this.anims.create({
+          key: 'dWalk',
+          frameRate: 4,
+          frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+          repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'crowWalk',
+            frameRate: 4,
+            frames: this.anims.generateFrameNumbers('scmove', { start: 0, end: 3 }),
+            repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'tinWalk',
+            frameRate: 4,
+            frames: this.anims.generateFrameNumbers('tmmove', { start: 0, end: 3 }),
+            repeat: -1,
+        });
     }
 
     create() {
@@ -16,9 +40,9 @@ class TinScene extends Phaser.Scene {
       
         this.background = this.add.tileSprite(0, 0, 650, 425, 'tinbg').setOrigin(0, 0);
 
-        this.player = this.physics.add.sprite(70, game.config.height/2 - 120, "player", 0).setScale(2);
-        this.scarecrow = this.physics.add.sprite(50, game.config.height/2 - 135, "scarecrow", 0).setScale(2);
-        this.stilltin = this.physics.add.sprite(360, game.config.height/2 - 120, "stilltin").setScale(2).setImmovable();
+        this.player = this.physics.add.sprite(70, game.config.height/2 - 120, "player", 0);
+        this.scarecrow = this.physics.add.sprite(50, game.config.height/2 - 135, "scarecrow", 0);
+        this.stilltin = this.physics.add.sprite(360, game.config.height/2 - 120, "stilltin").setImmovable();
 
         this.player.setCollideWorldBounds(true);
 
@@ -43,19 +67,38 @@ class TinScene extends Phaser.Scene {
         this.direction = new Phaser.Math.Vector2(0);
         if (keyA.isDown) {
             this.direction.x = -1;
+            this.player.anims.play('dWalk', true);
         } else if (keyD.isDown) {
             this.direction.x = 1;
+            this.player.anims.play('dWalk', true);
         }
         if (keyW.isDown) {
             this.direction.y = -1;
+            this.player.anims.play('dWalk', true);
         } else if (keyS.isDown) {
             this.direction.y = 1;
+            this.player.anims.play('dWalk', true);
         }
         this.direction.normalize();
         this.player.setVelocity(
             this.VEL * this.direction.x,
             this.VEL * this.direction.y
         );
+    
+        if (this.player.body.velocity.x == 0 && this.player.body.velocity.y == 0) {
+            this.player.anims.pause();
+        }
+
+        if (this.player.y > game.config.height/2 - 110) {
+            if (this.sceneStart == false) {
+                this.sceneStart = true;
+                this.startText = this.add.text(game.config.width/2, game.config.height/2, "You there, please help de-rust me!\nThere has to be an oil can behind\none of these trees.").setOrigin(0.5);
+                this.time.delayedCall(4000,() => {
+                    this.startText.setText(" ");
+                    console.log("textchange");
+                });
+            }
+        }
 
         this.collideTree(this.player, this.tree1);
         this.collideTree(this.player, this.tree2);
@@ -79,18 +122,17 @@ class TinScene extends Phaser.Scene {
             this.game.sound.stopAll();
             this.scene.start("lionScene")
         }
-        /*if (this.treefound == true) {
-
-        }*/
     }   
 
     friendsfollow() {
         if (this.player.body.velocity.x != 0 || this.player.body.velocity.y != 0) {
           this.physics.moveToObject(this.scarecrow, this.player, 70);
+          this.scarecrow.anims.play('crowWalk', true);
         }
         else {
           this.scarecrow.body.velocity.x = 0;
           this.scarecrow.body.velocity.y = 0;
+          this.scarecrow.anims.pause();
         }
     }
 
@@ -119,7 +161,7 @@ class TinScene extends Phaser.Scene {
         tree.destroy();
         if (this.treefound == false) {
             this.treefound = true;
-            this.can = this.physics.add.sprite(70, game.config.height/2 + 140, "oil", 0).setImmovable().setScale(4);
+            this.can = this.physics.add.sprite(70, game.config.height/2 + 140, "oil", 0).setImmovable();
             this.canText = this.add.text(game.config.width/2, game.config.height/2, "You found the Oil Can!").setOrigin(0.5);
             this.time.delayedCall(1000,() => {
                 this.canText.setText("Bring it here and de-rust me please!");
@@ -149,7 +191,7 @@ class TinScene extends Phaser.Scene {
                         "oil",
                          0
                     )
-                    .setDepth(9).setScale(2);
+                    .setDepth(9);
       
                 this.physics.add.existing(hand);
       
@@ -172,7 +214,7 @@ class TinScene extends Phaser.Scene {
             this.derusted = true;
             this.sceneOver = true;
             this.stilltin.destroy();
-            this.tinman = this.physics.add.sprite(360, game.config.height/2 - 120, "tinman", 0).setScale(2);
+            this.tinman = this.physics.add.sprite(360, game.config.height/2 - 120, "tinman", 0);
             this.tinText = this.add.text(game.config.width/2, game.config.height/2, "Thank you! You have such\na big heart!").setOrigin(0.5);
             this.time.delayedCall(3000,() => {
                 this.tinText.setText("I wish I had a heart like that...");
@@ -194,10 +236,12 @@ class TinScene extends Phaser.Scene {
     tinmanMove(speedx, speedy) {
         if (speedx != 0 || speedy != 0) {
           this.physics.moveToObject(this.tinman, this.player, 50);
+          this.tinman.anims.play('tinWalk', true);
         }
         else {
           this.tinman.body.velocity.x = 0;
           this.tinman.body.velocity.y = 0;
+          this.tinman.anims.pause();
         }
     }
 

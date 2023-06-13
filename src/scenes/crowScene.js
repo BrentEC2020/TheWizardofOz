@@ -5,6 +5,22 @@ class CrowScene extends Phaser.Scene {
         this.birdCount = 0;
     }
 
+    preload() {
+        this.anims.create({
+          key: 'dWalk',
+          frameRate: 4,
+          frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
+          repeat: -1,
+        });
+
+        this.anims.create({
+            key: 'crowWalk',
+            frameRate: 4,
+            frames: this.anims.generateFrameNumbers('scmove', { start: 0, end: 3 }),
+            repeat: -1,
+        });
+    }
+
     create() {
         keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -14,10 +30,10 @@ class CrowScene extends Phaser.Scene {
 
         this.background = this.add.tileSprite(0, 0, 650, 425, 'crowbg').setOrigin(0, 0);
       
-        this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0).setScale(2);
-        this.stillcrow = this.physics.add.sprite(320, game.config.height/4 + 270, "stillcrow", 0).setScale(2);
+        this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0)
+        this.stillcrow = this.physics.add.sprite(330, game.config.height/4 + 270, "stillcrow", 0);
         
-        this.bird = this.physics.add.sprite(670, game.config.height - 20, "bird", 0).setScale(4);
+        this.bird = this.physics.add.sprite(670, game.config.height - 20, "bird", 0);
 
         this.player.setCollideWorldBounds(true);
 
@@ -42,19 +58,27 @@ class CrowScene extends Phaser.Scene {
         this.direction = new Phaser.Math.Vector2(0);
         if (keyA.isDown) {
             this.direction.x = -1;
+            this.player.anims.play('dWalk', true);
         } else if (keyD.isDown) {
             this.direction.x = 1;
+            this.player.anims.play('dWalk', true);
         }
         if (keyW.isDown) {
             this.direction.y = -1;
+            this.player.anims.play('dWalk', true);
         } else if (keyS.isDown) {
             this.direction.y = 1;
+            this.player.anims.play('dWalk', true);
         }
         this.direction.normalize();
         this.player.setVelocity(
             this.VEL * this.direction.x,
             this.VEL * this.direction.y
         );
+    
+        if (this.player.body.velocity.x == 0 && this.player.body.velocity.y == 0) {
+            this.player.anims.pause();
+        }
 
         this.crows.getChildren().forEach((bird) => {
             this.physics.moveToObject(bird,this.stillcrow,100);
@@ -67,7 +91,7 @@ class CrowScene extends Phaser.Scene {
             this.sceneOver = true;
             this.sound.play("followroad", {volume: 0.01, loop: true, delay: 2});
             this.stillcrow.destroy();
-            this.scarecrow = this.physics.add.sprite(320, game.config.height/4 + 270, "scarecrow", 0).setScale(2);
+            this.scarecrow = this.physics.add.sprite(320, game.config.height/4 + 270, "scarecrow", 0);
             this.doneText = this.add.text(game.config.width/2, game.config.height/2, "Good Gracious! I would never have been able to do that\n since I don't have a brain.").setOrigin(0.5);
             this.time.delayedCall(3000,() => {
                 this.doneText.setText("You don't have a brain? Why, you should come\n to the Wizard with me and ask for one!");
@@ -127,10 +151,12 @@ class CrowScene extends Phaser.Scene {
     scarecrowMove(speedx, speedy) {
         if (speedx != 0 || speedy != 0) {
           this.physics.moveToObject(this.scarecrow, this.player, 50);
+          this.scarecrow.anims.play('crowWalk', true);
         }
         else {
           this.scarecrow.body.velocity.x = 0;
           this.scarecrow.body.velocity.y = 0;
+          this.scarecrow.anims.pause();
         }
     }
 }
