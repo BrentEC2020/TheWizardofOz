@@ -12,13 +12,8 @@ class HouseScene extends Phaser.Scene {
     keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     // all audio
-    this.music = this.sound.add('storm');
-    this.music.setVolume(0.001);
-    this.music.play();
-    this.crash = this.sound.add("tornadocrash");
-    this.crash.setVolume(1);
-    this.throw = this.sound.add("throw");
-    this.throw.setVolume(0.5);
+
+    this.sound.play("storm", {volume: 0.001})
 
     this.farm = this.add.tileSprite(0, 0, 650, 425, 'farm').setOrigin(0, 0);
 
@@ -78,13 +73,12 @@ class HouseScene extends Phaser.Scene {
         null,
         this
       );
-      this.music.stop();
   }
 // house levitation function
   houseElevate(house, tornado) {
     this.house.y -= 2;
     this.player.y -= 2;
-    this.crash.play();
+    this.sound.play("tornadocrash", {volume: 0.1})
     this.house.setTexture("brokenhouse");
     this.VEL = 0;
     this.time.delayedCall(5500, () => {
@@ -95,7 +89,7 @@ class HouseScene extends Phaser.Scene {
 // player shooting function
   playerShoot() { 
     this.input.on("pointerdown", (pointer) => {
-      this.throw.play();
+      this.sound.play("throw", {volume: 0.1})
       let bspeed = 200;
       let bullet = this.add
         .sprite(
@@ -131,6 +125,7 @@ class HouseScene extends Phaser.Scene {
       this.tornadoes.add(tornadosm);
   }
 
+  
   collide(group, bullet) {
     group.destroy();
     bullet.destroy();
