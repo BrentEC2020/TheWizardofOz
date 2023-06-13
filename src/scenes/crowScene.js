@@ -13,7 +13,7 @@ class CrowScene extends Phaser.Scene {
         this.background = this.add.tileSprite(0, 0, 650, 425, 'crowbg').setOrigin(0, 0);
       
         this.player = this.physics.add.sprite(100, game.config.height/2 + 30, "player", 0).setScale(2);
-        this.stillcrow = this.physics.add.sprite(100, game.config.height/2 + 30, "stillcrow", 0).setScale(2);
+        this.stillcrow = this.physics.add.sprite(100, game.config.height/4 + 300, "stillcrow", 0).setScale(2);
         this.physics.world.setBounds(0,0,game.config.width, game.config.height, true, true, true, true)
         this.player.setCollideWorldBounds(true);
     }
