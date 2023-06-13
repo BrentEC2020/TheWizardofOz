@@ -1,6 +1,6 @@
-class TinScene extends Phaser.Scene {
+class LionScene extends Phaser.Scene {
     constructor() {
-      super("tinScene");
+      super("lionScene");
     }
 
     create() {

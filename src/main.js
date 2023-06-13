@@ -16,7 +16,7 @@ let config = {
         }
     },
     
-    scene: [Load, Title, HouseScene, BrickScene]
+    scene: [Load, Title, HouseScene, BrickScene, CrowScene, TinScene, LionScene]
 }
 let game = new Phaser.Game(config);
 let centerX = game.config.width/2;
