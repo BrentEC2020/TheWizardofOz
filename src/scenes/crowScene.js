@@ -75,8 +75,8 @@ class CrowScene extends Phaser.Scene {
             }
       }
 
-    birdDestroy() {
-        this.crows.destroy();
+    birdDestroy(player, bird) {
+        bird.destroy();
     }
 }
 
